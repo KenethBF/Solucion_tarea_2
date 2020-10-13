@@ -1,0 +1,95 @@
+---
+title: "**Solución tarea 2**"
+author: "Kenneth Barrantes"
+date: "8/10/2020"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 4
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+---
+
+# Código para cargar función "replicar_reg_scal"
+
+
+Se carga la función "replicar_reg_scall" contenida en carpeta scripts dentro de repositorio local
+```{r funcion}
+
+source("./scripts/replicar_reg_scal.R") # Indica dirección de documento en formato R que contiene función
+
+```
+
+&nbsp;
+
+# Evaluación con respecto a numero de variables
+Se evaluan falsos positivos para diferentes numeros de variables, correspondientes a 10, 20, 50 y 100 variables respectivamente.
+```{r variables}
+
+falsos_positivos1 <- replicar_reg_scal(itr = 20, n = 30, nvars = 10, alfa = 0.05) # Función para determinar falsos positivos para 10 variables
+falsos_positivos2 <- replicar_reg_scal(itr = 20, n = 30, nvars = 20, alfa = 0.05) # Función para determinar falsos positivos para 20 variables
+falsos_positivos3 <- replicar_reg_scal(itr = 20, n = 30, nvars = 50, alfa = 0.05) # Función para determinar falsos positivos para 50 variables
+falsos_positivos4 <- replicar_reg_scal(itr = 20, n = 30, nvars = 100, alfa = 0.05) # Función para determinar falsos positivos para 100 variables
+
+
+falsos_positivos1 # Proporción de falsos positivos para 10 variables
+falsos_positivos2 # Proporción de falsos positivos para 20 variables
+falsos_positivos3 # Proporción de falsos positivos para 50 variables
+falsos_positivos4 # Proporción de falsos positivos para 100 variables
+```
+
+&nbsp;
+
+## Relación número de variables y falsos positivos
+
+Gráfico de dispersión para número de variables con respecto a proporción de falsos positivos en regresión escalonada.
+
+```{r num_variable-fal_positivo, fig.align='center'}
+falsos_variables<- c(falsos_positivos1,falsos_positivos2,falsos_positivos3,falsos_positivos4) # Conjunto de proporciones para falsos positivos
+
+plot(c(10, 20, 50, 100) ~ falsos_variables, ylab = "Número de variables", xlab = "Proporción de falsos positivos") # Gráfico dispersión numero de variables con respecto a proporción de falsos positivos
+```
+&nbsp;
+
+# Evaluación con respecto a significancia
+
+```{r significancia}
+
+falsos_positivosA <- replicar_reg_scal(itr = 20, n = 30, nvars = 50, alfa = 0.005) # Función para determinar falsos positivos para 10 variables
+falsos_positivosB <- replicar_reg_scal(itr = 20, n = 30, nvars = 50, alfa = 0.008) # Función para determinar falsos positivos para 20 variables
+falsos_positivosC <- replicar_reg_scal(itr = 20, n = 30, nvars = 50, alfa = 0.02) # Función para determinar falsos positivos para 50 variables
+falsos_positivosD <- replicar_reg_scal(itr = 20, n = 30, nvars = 50, alfa = 0.05) # Función para determinar falsos positivos para 100 variables
+
+
+falsos_positivosA # Proporción de falsos positivos para significancia de 0.005
+falsos_positivosB # Proporción de falsos positivos para significancia de 0.008
+falsos_positivosC # Proporción de falsos positivos para significancia de 0.02
+falsos_positivosD # Proporción de falsos positivos para significancia de 0.05
+```
+
+
+&nbsp;
+
+## Relación  significancia  y falsos positivos
+
+Gráfico de dispersión para número de variables con respecto a proporción de falsos positivos en regresión escalonada.
+
+```{r significancia_positivo, fig.align='center'}
+falsos_significancia<- c(falsos_positivosA,falsos_positivosB,falsos_positivosC,falsos_positivosD) # Conjunto de proporciones para falsos positivos
+
+plot(c(0.005, 0.008, 0.02, 0.05) ~ falsos_significancia, ylab = "Signifiancia", xlab = "Proporción de falsos positivos") # Gráfico para diferentes grados de significancia con respecto a proporción de falsos positivos
+```
+
+&nbsp;
+![](Lobito.jpg) <center>
+
+[Lobo](https://www.youtube.com/watch?v=IhnOpwOMHgk)
+
+&nbsp;
+
+## Información de la sesión
+
+```{r session, echo=FALSE}
+sessionInfo() # Información de la sesión
+```
